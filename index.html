@@ -25,12 +25,16 @@
         </form>
     </dialog>
 
-    <div>
-        <p id="result"></p>
+    <div id="left-side">
+        <div id="score-div" class="hidden">
+            <p>Score :</p>
+            <p id="player1Name-p">this is a score<span id="scorePlayer1-nb"></span></p>
+            <p id="player2Name-p">this is another score<span id="scorePlayer2-nb"></span></p>
+        </div>
         <button id="createNewGame-btn">Create new game</button>
 
     </div>
-    <div class="right-side">
+    <div id="right-side">
         <h1>Tic Tac Toe</h1>
         <div id="grid">
             <div class="cell" id="cell1"></div>
