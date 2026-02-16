@@ -10,8 +10,25 @@
 </head>
 
 <body>
+    <dialog id="createGame-dialog" closedby="none">
+        <form>
+            <div class="playerName-div">
+                <label for="firstPlayerName-input" class="playerName-label">Player 1 name :</label>
+                <input type="text" class="playerName-input" id="firstPlayerName-input" autofocus>
+            </div>
+            <div class="playerName-div">
+                <label for="secondPlayerName-input" class="playerName-label">Player 2 name :</label>
+                <input type="text" class="playerName-input" id="secondPlayerName-input">
+            </div>
+            <button id="cancelDialog-btn">Cancel</button>
+            <button id="confirmDialog-btn">Confirm</button>
+        </form>
+    </dialog>
+
     <div>
         <p id="result"></p>
+        <button id="createNewGame-btn">Create new game</button>
+
     </div>
     <div class="right-side">
         <h1>Tic Tac Toe</h1>

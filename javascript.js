@@ -1,9 +1,17 @@
+const createNewGameBtn = document.querySelector("#createNewGame-btn");
+const createGameDialog = document.querySelector("#createGame-dialog");
+const firstPlayerNameInput = document.querySelector("#firstPlayerName-input");
+const secondPlayerNameInput = document.querySelector("#secondPlayerName-input");
+const cancelDialogBtn = document.querySelector("#cancelDialog-btn");
+const confirmDialogBtn = document.querySelector("#confirmDialog-btn");
+
 const cellsDiv = document.querySelectorAll(".cell");
 const result = document.querySelector("#result");
 
 const playerFactory = (name, playerNumber) => {
     let number = playerNumber;
     let points = 0;
+    let turnToPlay = false;
 
     return {
         name,
@@ -16,6 +24,15 @@ const playerFactory = (name, playerNumber) => {
         },
         resetPoints() {
             points = 0;
+        },
+        getTurnToPlay(){
+            return turnToPlay;
+        },
+        toggleTurnToPlay(){
+            turnToPlay != turnToPlay;
+        },
+        resetTurnToPlay(){
+            turnToPlay = false;
         }
     }
 };
@@ -31,16 +48,12 @@ const cellFactory = (number) => {
         getFilled() {
             return filled;
         },
-        fillCell(playerNumber) {
-            if (playerNumber === 1) {
-                filled = "circle";
-            } else {
-                filled = "cross";
-            }
+        fillCell(symbol) {
+            filled = symbol;
         },
         resetCell() {
             filled = false;
-        },
+        }
 
     }
 }
@@ -58,6 +71,9 @@ const board = (() => {
     const cells = { cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9 };
 
     return {
+        fillCellManually(cellNumber, symbol) {
+            cells[`cell${cellNumber}`].fillCell(symbol);
+        },
         getCells() {
             return cells;
         },
@@ -73,41 +89,71 @@ const board = (() => {
                 | (cell1.getFilled() === symbol && cell5.getFilled() === symbol && cell9.getFilled() === symbol) // top left to bottom right diagonal
                 | (cell3.getFilled() === symbol && cell5.getFilled() === symbol && cell7.getFilled() === symbol)) // top right to bottom left diagonal
             {
-                if (symbol === circle) {
-                    result.textContent = "player1 won";
-                } else {
-                    result.textContent = "player2 won";
-                }
+                return true;
+            }else{
+                return false;
+            }
+        },
+        resetBoard() {
+            for(let number = 1; number <= 9; number++){
+                cells[`cell${number}`].resetCell();
             }
         },
         displayBoard() {
-            resetBoard;
             cellsDiv.forEach(cell => {
-                const cellDiv = document.querySelector(`#${cell}`);
                 const img = document.createElement("img");
                 img.classList.add("symbol");
                 const symbol = cells[cell.id].getFilled();
 
                 if (symbol === "circle") {
                     img.src = "images/circle.svg";
-                } else if(symbol === "cross"){
+                } else if (symbol === "cross") {
                     img.src = "images/cross.svg";
                 }
-                cellDiv.appendChild(img);
-            })
-        },
-        resetBoard(){
-            cellsDiv.forEach(cell =>{
-                cell.innerHTML="";
+                cell.appendChild(img);
             })
         }
     }
 })();
 
+const roundFactory = () => {
+
+    let completeLine = false;
+    while (completeLine === false) {
+
+    }
+}
+
+const game = (() => {
+    let gameActive = false;
+    
+})
 
 // cells.addEventListener("click", () => {
 
 // })
 
-const player1 = playerFactory("Alice", 1);
-const player2 = playerFactory("Michael", 2);
+createNewGameBtn.addEventListener("click", () => {
+    createGameDialog.showModal();
+});
+
+createGameDialog.addEventListener("close", () => {
+    createGameDialog.querySelectorAll("input").forEach(input => {
+        input.value = "";
+    });
+})
+
+cancelDialogBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    createGameDialog.close();
+})
+
+confirmDialogBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    player1 = playerFactory(firstPlayerNameInput.value, 1);
+    player2 = playerFactory(secondPlayerNameInput.value, 2);
+    createGameDialog.close();
+})
+
+let player1;
+let player2;
