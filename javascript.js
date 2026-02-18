@@ -95,6 +95,14 @@ const board = (() => {
                 return false;
             }
         },
+        boardComplete(){
+            for (let cell in cells){
+                if(cells[cell].getFilled() === false){
+                    return false;
+                }
+            }
+            return true;
+        },
         resetCells() {
             for (let number = 1; number <= 9; number++) {
                 cells[`cell${number}`].resetCell();
@@ -171,6 +179,8 @@ cellsDiv.forEach(cellDiv => {
         }else if(board.hasCompleteLine(2)){
             player2.addPoint();
             game.roundEnd();
+        }else if (board.boardComplete()){
+            game.roundEnd();
         }
     })
 })
@@ -195,8 +205,8 @@ confirmDialogBtn.addEventListener("click", (event) => {
     player1 = playerFactory(firstPlayerNameInput.value, 1);
     player2 = playerFactory(secondPlayerNameInput.value, 2);
 
-    player1NameP.firstChild.textContent = firstPlayerNameInput.value;
-    player2NameP.firstChild.textContent = secondPlayerNameInput.value;
+    player1NameP.firstChild.textContent = (`${firstPlayerNameInput.value} `);
+    player2NameP.firstChild.textContent = (`${secondPlayerNameInput.value} `);
     scorePlayer1Nb.textContent = "0";
     scorePlayer2Nb.textContent = "0";
     scoreDiv.classList.remove("hidden");
