@@ -72,9 +72,10 @@ const board = (() => {
         }
 
     return {
-        fillCellManually(cellNumber, symbol) {
-            cells[`cell${cellNumber}`].setFill(symbol);
-        },
+        // fillCellManually(cellNumber, symbol) {
+        //     cells[`cell${cellNumber}`].setFilled(symbol);
+        // },
+        //This was for testing while developing
         getCells() {
             return cells;
         },
@@ -117,8 +118,10 @@ const board = (() => {
 
                 if (symbol === "circle") {
                     img.src = "images/circle.svg";
+                    img.classList.add("green");
                 } else if (symbol === "cross") {
                     img.src = "images/cross.svg";
+                    img.classList.add("pink");
                 }
                 cellDiv.appendChild(img);
             })
@@ -166,6 +169,7 @@ cellsDiv.forEach(cellDiv => {
     cellDiv.addEventListener("click", (event) => {
         if(!game.getGameActive()) return;
         const cellName = cellDiv.id;
+        if(board.getCells()[cellName].getFilled() !== false) return;
         if(game.getTurnToPlay() === 1){
             board.getCells()[cellName].setFilled("circle");
         }else if(game.getTurnToPlay() === 2){
